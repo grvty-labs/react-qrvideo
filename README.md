@@ -6,6 +6,10 @@ This project can be useful for people who need to transfer data between devices,
 
 This project was developed to be executed in React-Native with Redux and runs on expo.
 
+By performing multiple tests, I managed to transfer 10 kb / s on average, without losing image quality in QR sequences (to be able to scan correctly, even on devices with small screens). However theoretically, it could be transferred up to a speed of 43 kb / s
+
+At the moment the project only allows to transfer objects of type JSON, however, later on I hope to be able to add transfer of other types of files.
+
 ## Features!
 
   - Generates QR code sequence from an object of type JSON

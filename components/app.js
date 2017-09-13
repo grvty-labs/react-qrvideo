@@ -34,7 +34,7 @@ export default class QRV extends React.Component<Props, State> {
     const { json, setQrIndex } = this.props;
     // TODO: Save images SVG and render iterative
     this.setState({
-      jsonPieces: divideJsonToStrings(json, 400),
+      jsonPieces: divideJsonToStrings(json, 600),
     });
     this.state.intervalQr = setInterval(() => {
       const addJsonIndex = (this.state.jsonIndex < this.state.jsonPieces.length - 1)
@@ -45,7 +45,7 @@ export default class QRV extends React.Component<Props, State> {
         jsonIndex: addJsonIndex,
       });
       setQrIndex(this.state.jsonIndex);
-    }, 200);
+    }, 50);
   }
 
   componentWillUnmount() {

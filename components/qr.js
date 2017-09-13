@@ -20,7 +20,7 @@ export default class QR extends React.Component<Props, State> {
   render() {
     const { value, currentQrIndex, currentKey } = this.props;
     return (<View style={{ height: (currentQrIndex === currentKey) ? null : 0 }}>
-      <Text>{currentQrIndex} {currentKey}</Text>
+      <Text>{currentQrIndex}</Text>
       <QRCode
         value={value}
         size={300}
