@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 type Props = {
   value: string,
   currentKey: number,
   currentQrIndex: number,
+  size: number,
 };
 type State = {};
 export default class QR extends React.Component<Props, State> {
@@ -14,16 +15,29 @@ export default class QR extends React.Component<Props, State> {
     value: 'a',
     currentKey: 0,
     currentQrIndex: 0,
+    size: 300,
   };
   state: State = {};
 
   render() {
-    const { value, currentQrIndex, currentKey } = this.props;
-    return (<View style={{ height: (currentQrIndex === currentKey) ? null : 0 }}>
-      <Text>{currentQrIndex}</Text>
+    const { value, currentQrIndex, currentKey, size } = this.props;
+    return (<View
+      style={
+        (currentQrIndex === currentKey)
+        ? {
+            height: size,
+            opacity: 1,
+          }
+        : {
+            opacity: 0,
+            height: 0,
+          }
+        }
+      >
+      {/* <Text>{currentQrIndex}</Text> */}
       <QRCode
         value={value}
-        size={300}
+        size={size}
       />
     </View>);
   };

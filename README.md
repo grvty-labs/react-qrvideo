@@ -89,6 +89,9 @@ render() {
 | isScanner | Activating this value will activate the scanning mode | boolean | No | false |
 | json | JSON object to be transferred by QR stream | Object | No | null |
 | size | QR size | number | No | 300 |
+| speed | QR sequence speed in milliseconds | number | No | 250 |
+| density | Character density per QR | number | No | 400 |
+| onComplete | Callback function when scan finished | Function | No | () => {} |
 
 
 ### Author

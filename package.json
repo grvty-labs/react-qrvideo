@@ -1,7 +1,7 @@
 {
-  "name": "qrv",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-qrvideo",
+  "version": "0.1.1",
+  "private": false,
   "devDependencies": {
     "flow-bin": "^0.54.1",
     "jest-expo": "~20.0.0",
@@ -36,5 +36,29 @@
     "redux-persist-transform-encrypt": "^1.0.2",
     "remote-redux-devtools": "^0.5.12",
     "rxjs": "^5.4.3"
-  }
+  },
+  "description": "Transfer data through QR codes.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grvty-labs/react-qrvideo.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-redux",
+    "redux",
+    "qr",
+    "video",
+    "qrvideo",
+    "yamilquery",
+    "data",
+    "transfer",
+    "json"
+  ],
+  "author": "Yamil Díaz Aguirre <yamilquery@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grvty-labs/react-qrvideo/issues"
+  },
+  "homepage": "https://github.com/grvty-labs/react-qrvideo#readme"
 }
