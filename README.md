@@ -82,9 +82,9 @@ render() {
 
 | Name | Description | Type | Required | Default Value
 | ----------- | ----------- | ----------- | ----------- | ----------- |
-| isScanner | ----------- | ----------- | ----------- | ----------- |
-| json | ----------- | ----------- | ----------- | ----------- |
-| size | ----------- | ----------- | ----------- | ----------- |
+| isScanner | Activating this value will activate the scanning mode | boolean | No | false |
+| json | JSON object to be transferred by QR stream | Object | No | null |
+| size | QR size | number | No | 300 |
 
 
 ### Author
