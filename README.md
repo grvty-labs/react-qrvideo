@@ -8,7 +8,7 @@ This project can be useful for people who need to transfer data between devices,
 
   - Comming soon
 
-<!-- <img src="http://i.imgur.com/6KXN7jG.png" width="250"> -->
+<img src="https://media.giphy.com/media/l378phhgBqkVPFJTO/giphy.gif" width="250">
 
 ### Installation
 
