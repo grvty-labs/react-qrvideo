@@ -18,7 +18,7 @@ At the moment the project only allows to transfer objects of type JSON, however,
   - When the entire sequence is scanned, it decompresses and returns the JSON object
   - You can configure the size of generated QRs
 
-<img src="https://media.giphy.com/media/l378phhgBqkVPFJTO/giphy.gif" width="250">
+<img src="https://media.giphy.com/media/d3aCGDAo56TTQmMo/giphy.gif" width="250">
 
 ## Dependencies
 
