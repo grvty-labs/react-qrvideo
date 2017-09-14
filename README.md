@@ -53,18 +53,33 @@ $ npm install react-qrvideo --save
 
 ### Usage
 
+##### Include reducer
+
+```javascript
+import { qrReducer as DataQr } from '../components/react-qrvideo';
+
+const reducersJson = {
+  // Your reducer ...
+};
+
+reducersJson[DATA_QR] = DataQr;
+export default combineReducers(reducersJson);
+```
+
 ##### QR Secuence from JSON
 
 ```javascript
-import QRVideo from 'react-qrvideo';
+import { QRVideo } from 'react-qrvideo';
 
 render() {
-  const sampleJson = {grvty: 'rules'};
+  const sampleJson = {name: 'Yamil', email: 'yamilquery@gmail', github: 'yamilquery'};
     return(
         <QRVideo
           isScanner={false}
           json{sampleJSon}
           size={300}
+          speed={50}
+          density={300}
         />
     );
 }
@@ -73,11 +88,14 @@ render() {
 ##### QR Scanner for Secuence
 
 ```javascript
-import QRVideo from 'react-qrvideo';
+import { QRVideo } from 'react-qrvideo';
 
 render() {
     return(
-        <QRVideo isScanner={true} />
+        <QRVideo
+          isScanner
+          onComplete={data => { alert(JSON.stringify(data)); }}
+        />
     );
 }
 ```

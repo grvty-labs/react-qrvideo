@@ -22,6 +22,19 @@ type State = {
   jsonIndex: number,
   isComplete: boolean,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  containerBarScanner: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+});
+
 export default class QRV extends React.Component<Props, State> {
   static defaultProps: Props = {
     json: [],
@@ -41,25 +54,30 @@ export default class QRV extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const { json, setQrIndex, speed, density } = this.props;
+    const { json, setQrIndex, speed, density, isScanner } = this.props;
     // TODO: Save images SVG and render iterative
-    this.setState({
-      jsonPieces: divideJsonToStrings(json, density),
-    });
-    this.state.intervalQr = setInterval(() => {
-      const addJsonIndex = (this.state.jsonIndex < this.state.jsonPieces.length - 1)
-        ? this.state.jsonIndex + 1
-        : 0;
+    if (!isScanner) {
       this.setState({
-        ...this.state,
-        jsonIndex: addJsonIndex,
+        jsonPieces: divideJsonToStrings(json, density),
       });
-      setQrIndex(this.state.jsonIndex);
-    }, speed);
+      this.state.intervalQr = setInterval(() => {
+        const addJsonIndex = (this.state.jsonIndex < this.state.jsonPieces.length - 1)
+          ? this.state.jsonIndex + 1
+          : 0;
+        this.setState({
+          ...this.state,
+          jsonIndex: addJsonIndex,
+        });
+        setQrIndex(this.state.jsonIndex);
+      }, speed);
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalQr);
+    const { isScanner } = this.props;
+    if (!isScanner) {
+      clearInterval(this.state.intervalQr);
+    }
   }
 
   shouldCompmonentUpdate() {
@@ -68,45 +86,47 @@ export default class QRV extends React.Component<Props, State> {
 
   scann(data: any) {
     const { onComplete } = this.props;
-    const scannIndex: number = parseInt(data.data.split("®")[0]);
-    this.state.jsonPiecesScann[scannIndex] = data.data.split("®")[1];
+    const metaData: string = data.data.split('®');
+    const scannIndex: number = Number(metaData[0].split(',')[0]);
+    const partsTotal: number = Number(metaData[0].split(',')[1]);
+    this.state.jsonPiecesScann[scannIndex] = metaData[1];
     this.setState({
       ...this.state,
       jsonPiecesScann: this.state.jsonPiecesScann,
     }, () => {
-      var notEmpty: number = 0;
-      for (var i in this.state.jsonPiecesScann) {
-        if (this.state.jsonPiecesScann[i] !== undefined) notEmpty += 1;
+      let notEmpty: number = 0;
+      for (let i in this.state.jsonPiecesScann) {
+        if (this.state.jsonPiecesScann[i] !== null) notEmpty += 1;
       }
-      if (notEmpty >= (this.state.jsonPieces.length)) {
-        if (!this.state.isComplete) onComplete(joinStringsToJson(this.state.jsonPiecesScann));
-        this.setState({isComplete: true});
+      if (notEmpty >= partsTotal) {
+        if (!this.state.isComplete) {
+          onComplete(joinStringsToJson(this.state.jsonPiecesScann));
+        }
+        this.setState({ isComplete: true });
       }
     });
   }
 
   renderMode() {
     const { isScanner, size } = this.props;
-    // if (!isScanner) {
-    //   return (<View style={styles.container}>
-    //     <View style={styles.containerBarScanner}>
-    //       <BarCodeScanner
-    //         onBarCodeRead={(data) => this.scann(data)}
-    //         style={{ flex: 1, }}
-    //       />
-    //     </View>
-    //     { this.state.jsonPieces.map((item, key) => <QR size={size} value={key + '®' + item} key={key} currentKey={key} />) }
-    //   </View>);
-    // }
-    if (!isScanner) {
+    if (!isScanner) {
       return (<View style={styles.container}>
-        { this.state.jsonPieces.map((item, key) => <QR size={size} value={key + '®' + item} key={key} currentKey={key} />) }
+        {
+          this.state.jsonPieces.map((item, key) => (
+            <QR
+              size={size}
+              value={key + ',' + this.state.jsonPieces.length + '®' + item}
+              key={key}
+              currentKey={key}
+            />
+          ))
+        }
       </View>);
     }
     return (<View style={styles.containerBarScanner}>
       <BarCodeScanner
-        onBarCodeRead={(data) => this.scann(data)}
-        style={{ flex: 1, }}
+        onBarCodeRead={data => this.scann(data)}
+        style={{ flex: 1 }}
       />
     </View>);
   }
@@ -119,19 +139,3 @@ export default class QRV extends React.Component<Props, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  containerBarScanner: {
-    marginTop: 16,
-    paddingBottom: 16,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  }
-});
