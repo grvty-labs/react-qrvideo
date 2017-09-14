@@ -75,7 +75,6 @@ render() {
   const sampleJson = {name: 'Yamil', email: 'yamilquery@gmail', github: 'yamilquery'};
     return(
         <QRVideo
-          isScanner={false}
           json{sampleJSon}
           size={300}
           speed={50}
