@@ -1,6 +1,6 @@
 {
   "name": "react-qrvideo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "devDependencies": {
     "flow-bin": "^0.54.1",
@@ -19,7 +19,7 @@
   "jest": {
     "preset": "jest-expo"
   },
-  "dependencies": {
+  "peerDependencies": {
     "expo": "^20.0.0",
     "history": "^4.7.2",
     "immutable": "^3.8.1",
