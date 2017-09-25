@@ -46,33 +46,44 @@ export default class QRV extends React.Component<Props, State> {
     setQrIndex: () => {},
   }
   state: State = {
-    jsonPieces: [],
+    jsonPieces: divideJsonToStrings(this.props.json, this.props.density),
     intervalQr: null,
     jsonPiecesScann: [],
     jsonIndex: 0,
     isComplete: false,
   }
 
+  /**
+   * Initialize intervals
+   * @returns {void}
+   */
   componentDidMount() {
-    const { json, setQrIndex, speed, density, isScanner } = this.props;
-    // TODO: Save images SVG and render iterative
+    const { speed, isScanner } = this.props;
     if (!isScanner) {
-      this.setState({
-        jsonPieces: divideJsonToStrings(json, density),
-      });
-      this.state.intervalQr = setInterval(() => {
-        const addJsonIndex = (this.state.jsonIndex < this.state.jsonPieces.length - 1)
-          ? this.state.jsonIndex + 1
-          : 0;
-        this.setState({
-          ...this.state,
-          jsonIndex: addJsonIndex,
-        });
-        setQrIndex(this.state.jsonIndex);
-      }, speed);
+      this.state.intervalQr = setInterval(() => this.intervalRefreshQr(), speed);
     }
   }
 
+  /**
+   * Interval to refresh QR Video
+   * @returns {void}
+   */
+  intervalRefreshQr() {
+    const { setQrIndex } = this.props;
+    const addJsonIndex = (this.state.jsonIndex < this.state.jsonPieces.length - 1)
+      ? this.state.jsonIndex + 1
+      : 0;
+    this.setState({
+      ...this.state,
+      jsonIndex: addJsonIndex,
+    });
+    setQrIndex(this.state.jsonIndex);
+  }
+
+  /**
+   * On exit kill interval to refresh QR Video
+   * @returns {void}
+   */
   componentWillUnmount() {
     const { isScanner } = this.props;
     if (!isScanner) {
